@@ -4,6 +4,8 @@ import com.google.inject.AbstractModule
 import com.google.inject.Guice
 import com.google.inject.Inject
 import io.github.t45k.guiceTrial.basic.BasicComponent
+import io.github.t45k.guiceTrial.multiImplementatin.MultiInterface
+import io.github.t45k.guiceTrial.multiImplementatin.MultiInterfaceImplementation1
 import io.github.t45k.guiceTrial.oneImplementatin.BasicInterface
 
 class App1 @Inject constructor(private val basicComponent: BasicComponent) {
@@ -15,6 +17,12 @@ class App1 @Inject constructor(private val basicComponent: BasicComponent) {
 class App2 @Inject constructor(private val basicInterface: BasicInterface) {
     fun act() {
         basicInterface.act()
+    }
+}
+
+class App3 @Inject constructor(private val multiInterface: MultiInterface) {
+    fun act() {
+        multiInterface.act()
     }
 }
 
@@ -36,4 +44,12 @@ fun main() {
 
     app2.act()
 
+    // 対象の実装が複数ある場合は，AbstractModule#bind内で使う実装を指定する
+    val app3: App3 = Guice.createInjector(object : AbstractModule() {
+        override fun configure() {
+            bind(MultiInterface::class.java).to(MultiInterfaceImplementation1::class.java)
+        }
+    }).getInstance(App3::class.java)
+
+    app3.act()
 }
