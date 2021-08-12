@@ -52,4 +52,10 @@ fun main() {
     }).getInstance(App3::class.java)
 
     app3.act()
+
+    // injectionのconfigureを外部に切ることもできる
+    val injector = Guice.createInjector(TrialModule())
+    injector.getInstance(App1::class.java).act()
+    injector.getInstance(App2::class.java).act()
+    injector.getInstance(App3::class.java).act()
 }
