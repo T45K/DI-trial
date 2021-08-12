@@ -7,6 +7,7 @@ import io.github.t45k.guiceTrial.basic.BasicComponent
 import io.github.t45k.guiceTrial.multiImplementatin.MultiInterface
 import io.github.t45k.guiceTrial.multiImplementatin.MultiInterfaceImplementation1
 import io.github.t45k.guiceTrial.oneImplementatin.BasicInterface
+import io.github.t45k.guiceTrial.tangledDependency.TangledDependency
 
 class App1 @Inject constructor(private val basicComponent: BasicComponent) {
     fun act() {
@@ -58,4 +59,7 @@ fun main() {
     injector.getInstance(App1::class.java).act()
     injector.getInstance(App2::class.java).act()
     injector.getInstance(App3::class.java).act()
+
+    // tangled
+    injector.getInstance(TangledDependency::class.java).act()
 }
